@@ -909,3 +909,375 @@ Next :::
 	
 		- git branch <feature_branch1> <feature_branch2> 		# To create new Branch 
 
+
+
+
+		
+#######################
+Day 12: 19th Dec. 2025
+#######################	
+
+	Working with Branches :
+	
+	- Create Branches :::
+	
+		- git branch 					# To get the list of Branches 
+		
+		- git branch <branch_name> 		# To create new Branch 
+	
+		- git branch <feature_branch1> <feature_branch2> 		# To create new Branch 
+		
+		- git switch -c <new_branch_name> # To create new Branch & Switch to new_branch_name
+		
+		- git switch master 			 	# Switch to master 
+		
+		Eg.: 
+			
+			Repo1: 
+				
+				master: cm1,cm2 
+					
+					git switch -c feature1 
+					
+						feature1 : cm1,cm2 
+								
+								cm1,cm2,f1cm1 
+								
+						git switch master				# To Switch to the target branch before merge!
+						
+						git merge feature1				# To Merge the Changes from feature1 to target branch
+														# Execute git merge command from traget branch.
+													
+		
+				
+	GIT Merge Conflicts :
+
+		- When more than one user/feature try to update same file at the same level, merge conflict occurs.
+		
+		
+	Handle/Fix Merge Conflicts :
+
+		- How to fix Merge Conflicts ?
+		
+			- Identify the file(s) causing the merge conflicts
+			- Open the file and review the changes 
+			- Upon review, decide which changes to be retained/delete from that file(s).
+			- Update the file by removing the extra header/footer notes and contents.
+			- Perform git add and git commit to fix the issue.				
+		
+		
+	On DevOps Perspective :::		
+	
+			- Never Fix Merge Conflicts!  Instead, prevent the Merge Conflicts!
+			
+			
+	GIT REBASE :::
+
+		- Rebase is used to maintain linear commit history 
+		- Rebase is used to keep the current branch in-sync with target branch 
+		- Rebase can prevent merge-conflicts in the target branch 
+		- As a best practise, it is always recommended to use rebase before merge
+	
+	- Repo1:
+		
+		master : cm1,cm2,cm3
+		
+				cm1,cm2,cm3,f1cm1,f1cm2,f1cm3						# From Feature1 
+				
+				cm1,cm2,cm3,f2cm1,f2cm2,f2cm3,f1cm1,f1cm2,f1cm3		# Upon merge feature2 without proper rebase
+				
+				cm1,cm2,cm3,f1cm1,f1cm2,f1cm3,f2cm1,f2cm2,f2cm3		# Expected Linear Commit History with proper commit history!
+					
+					
+	
+			feature1 : cm1,cm2,cm3
+							cm1,cm2,cm3,f1cm1,f1cm2,f1cm3
+							
+							git switch master 
+							
+							git merge feature1 
+				
+			
+			feature2 : cm1,cm2,cm3
+							cm1,cm2,cm3,f2cm1,f2cm2,f2cm3							
+							
+							git rebase master
+							
+							cm1,cm2,cm3,f1cm1,f1cm2,f1cm3,f2cm1,f2cm2,f2cm3			# Upon Rebase
+							
+							git switch master 
+							
+							git merge feature2 		
+			
+			
+	
+	- GIT SQUASH :::::
+	
+	
+		- Git Squash option is used to combine more than one commits into single commit point.
+		
+		
+	- Repo1:
+		
+		master : cm1,cm2,cm3
+		
+					
+	
+			feature1 : cm1,cm2,cm3
+							cm1,cm2,cm3,f1cm1,f1cm2,f1cm3,4,5,6,7,8,8,9,.............................,123
+							
+				git switch master 
+				
+				//git merge feature1 
+				
+				git merge --squash feature1 	
+					
+					git commit -m "Combined Changes" 
+			
+		
+		
+	
+	- GIT CHERRYPICK::
+	
+		- Used to merge specific commit to target branch
+		
+		- As a best practise we never use git cherry-pick!		
+	
+			git cherry-pick <commit_id1> <commit_id2> 
+			
+			
+
+Next :::
+
+	GIT STASH 
+	
+	Handle Remote Repositories using Github.
+	
+	
+	
+		
+		
+		
+		
+		
+		
+		
+  673  clear
+  674  ls
+  675  mkdir samplerepo1
+  676  cd samplerepo1/
+  677  clear
+  678  git init
+  679  git status
+  680  git branch
+  681  echo "rec1" >> s1.txt
+  682  git add .
+  683  git commit -m "cm1"
+  684  git branch
+  685  echo "rec1" >> s2.txt
+  686  git add .
+  687  git commit -m "cm2"
+  688  clear
+  689  git log --oneline
+  690  git status
+  691  git branch
+  692  git branch feature1
+  693  git branch
+  694  git branch feature2
+  695  git branch
+  696  git log --oneline
+  697  git switch -c feature3
+  698  git branch
+  699  git log --oneline
+  700  ls
+  701  git switch master
+  702  git log --oneline
+  703  ls
+  704  git switch feature1
+  705  git log --oneline
+  706  git status
+  707  ls
+  708  echo "rec1" >> f1.txt
+  709  git add .
+  710  git commit -m "f1cm1"
+  711  git status
+  712  git log --oneline
+  713  git switch master
+  714  git log --oneline
+  715  ls
+  716  git merge feature1
+  717  git log --oneline
+  718  ls
+  719  git switch feature2
+  720  git log --oneline
+  721  ls
+  722  echo "rec1" >> l1.txt
+  723  git add .
+  724  git commit -m "f2cm1"
+  725  git log --oneline
+  726  git switch master
+  727  git merge feature2
+  728  git log --oneline
+  729  clear
+  730  cd ..
+  731  mkdir samplerepo2
+  732  clear
+  733  cd samplerepo2/
+  734  git init
+  735  clear
+  736  echo "rec1" >> l1.txt
+  737  git add .
+  738  git commit -m "cm1"
+  739  clear
+  740  git log --oneline
+  741  git branch feature1 feature2
+  742  clear
+  743  git branch feature1
+  744  git branch
+  745  ls
+  746  cat l1.txt
+  747  git branch feature2
+  748  git log --oneline
+  749  git switch feature1
+  750  ls
+  751  cat l1.txt
+  752  git log --oneline
+  753  cat l1.txt
+  754  echo "record2 from feature1" >> l1.txt
+  755  git add .
+  756  git commit -m "f1cm1"
+  757  cat l1.txt
+  758  git switch master
+  759  cat l1.txt
+  760  git log --oneline
+  761  git merge feature1
+  762  cat l1.txt
+  763  git log --oneline
+  764  git switch feature2
+  765  ls
+  766  cat l1.txt
+  767  git log --oneline
+  768  echo "record2 from feature2" >> l1.txt
+  769  git status
+  770  git add .
+  771  git commit -m "f2cm1"
+  772  git status
+  773  git log --oneline
+  774  cat l1.txt
+  775  git switch master
+  776  cat l1.txt
+  777  git log --oneline
+  778  git merge feature2
+  779  clear
+  780  git status
+  781  vi l1.txt
+  782  cat l1.txt
+  783  git add .
+  784  git commit -m "fixed conflict!"
+  785  git log --oneline
+  786  clear
+  787  cd ..
+  788  mkdir samplerepo3
+  789  clear
+  790  cd samplerepo
+  791  cd samplerepo3/
+  792  git init
+  793  git branch feature1
+  794  echo "rec1" >> f1.txt
+  795  git add .
+  796  git commit -m "cm1"
+  797  echo "rec1" >> f2.txt
+  798  git add .
+  799  git commit -m "cm2"
+  800  clear
+  801  git log --oneline
+  802  git branch feature1
+  803  git branch feature2
+  804  git switch -c feature1
+  805  git switch feature1
+  806  ls
+  807  git log --oneline
+  808  echo "rec1" >> s1.txt
+  809  git add .
+  810  git commit -m "f1cm1"
+  811  echo "rec1" >> s2.txt
+  812  git add .
+  813  git commit -m "f1cm2"
+  814  echo "rec1" >> s3.txt
+  815  git add .
+  816  git commit -m "f1cm3"
+  817  git log --oneline
+  818  ls
+  819  git rebase master
+  820  git switch master
+  821  git merge feature1
+  822  git log --oneline
+  823  git switch feature2
+  824  git log --oneline
+  825  ls
+  826  echo "rec1" >> q1.txt
+  827  git add .
+  828  git commit -m "f1cm1"
+  829  echo "rec1" >> q2.txt
+  830  git add .
+  831  git commit -m "f1cm2"
+  832  echo "rec1" >> q3.txt
+  833  git add .
+  834  git commit -m "f1cm3"
+  835  echo "rec1" >> q4.txt
+  836  git add .
+  837  git commit -m "f1cm4"
+  838  git commit -m "f1cm4"
+  839  echo "rec1" >> q5.txt
+  840  git add .
+  841  git commit -m "f1cm5"
+  842  celar
+  843  clear
+  844  git status
+  845  git log --oneline
+  846  ls
+  847  git rebase master
+  848  git log --oneline
+  849  ls
+  850  git switch master
+  851  ls
+  852  git status
+  853  git log --oneline
+  854  git merge feature2
+  855  git log --oneline
+  856  git switch feature1
+  857  git log --oneline
+  858  git rebase master
+  859  git log --oneline
+  860  clear
+  861  ls
+  862  git status
+  863  git log --oneline
+  864  echo "rec1" >> a1.txt
+  865  git add .
+  866  git commit -m "fc1"
+  867  echo "rec1" >> a2.txt
+  868  git add .
+  869  git commit -m "fc2"
+  870  echo "rec1" >> a3.txt
+  871  git add .
+  872  git commit -m "fc3"
+  873  echo "rec1" >> a4.txt
+  874  git add .
+  875  git commit -m "fc4"
+  876  echo "rec1" >> a5.txt
+  877  git add .
+  878  git commit -m "fc5"
+  879  echo "rec1" >> a6.txt
+  880  git add .
+  881  git commit -m "fc6"
+  882  git log --oneline
+  883  git rebase master
+  884  git switch master
+  885  git merge --squash feature1
+  886  git status
+  887  git commit -m "Combined changes"
+  888  git log --oneline
+  889  ls
+  890  cd ..
+  891  history
